@@ -1,0 +1,38 @@
+---
+ip: "192.168.10.10"
+memory: 1024
+cpus: 1
+provider: virtualbox
+
+nodes: 3
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: D:/projects
+      to: /home/vagrant/projects
+
+languages:
+    - php5.6
+#     - php7.0
+#     - php7.1
+#     - php7.2
+#     - java
+#     - nodejs
+
+dbms:
+    - mariadb
+#     - mongodb
+
+databases:
+    - carbonifero
+    
+# ports:
+#     - send: 50000
+#       to: 5000
+#     - send: 7777
+#       to: 777
+#       protocol: udp
