@@ -87,7 +87,7 @@ Voila.
 If you discover any security related issues, please email ahmad.riyadh.al@faathin.com instead of using the issue tracker.
 
 ## Credits
-- [https://www.canonical.com](Canonical Ltd)
+- [Canonical Ltd](https://www.canonical.com)
 
 ## License
 The Apache License 2.0 License. Please see [License File](LICENSE.md) for more information.
