@@ -17,6 +17,9 @@ class Carbonifero
         # Allow SSH Agent Forward from The Box
         config.ssh.forward_agent = true
 
+        # Allow Multiple Key
+        config.ssh.insert_key = false
+
         # Configure The Box
         config.vm.define "carbonifero-#{i}" do |node|
             node.vm.box = settings["box"] ||= "ubuntu/xenial64"
@@ -27,10 +30,11 @@ class Carbonifero
             if settings["ip"] != "autonetwork"
                 if settings.has_key?("ip")
                     tempIp=settings['ip'].split(".")
-                    node.vm.network :private_network, ip: "#{tempIp[0]}.#{tempIp[1]}.#{tempIp[2]}.#{Integer(tempIp[3])+i}"
+                    hostIp="#{tempIp[0]}.#{tempIp[1]}.#{tempIp[2]}.#{Integer(tempIp[3])+i}"
                 else
-                    node.vm.network :private_network, ip: "192.168.10.#{i}"
+                    hostIp="192.168.10.#{i}"
                 end
+                node.vm.network :private_network, ip: hostIp
             else
                 node.vm.network :private_network, :ip => "0.0.0.0", :auto_network => true
             end
@@ -193,10 +197,10 @@ class Carbonifero
                 end
             end
 
-            #Install Extras
+            #Install Host
             node.vm.provision "shell" do |s|
                 s.name = "Configuring Hosts"
-                s.path = scriptDir + "/config-host.sh"
+                s.path = scriptDir + "/configure-host.sh"
                 s.privileged=true
                 s.args = [settings['ip'] ||= "192.168.10.10", settings['nodes']]
             end
@@ -206,32 +210,6 @@ class Carbonifero
                 s.name = "Installing Extras"
                 s.path = scriptDir + "/install-extras.sh"
                 s.privileged=false
-            end
-
-            # Install all selected dbms
-            if settings.include?("dbms")
-                if settings["dbms"].to_s.length == 0
-                    puts "Check your carbonifero.yaml file, you have no dbms specified."
-                    exit
-                end
-                settings["dbms"].each do |database|
-                    if (database == "mariadb")
-                        node.vm.provision "shell" do |s|
-                            s.name ="Installing MariaDB"
-                            s.path = scriptDir + "/install-mariadb.sh"
-                            s.privileged=true
-                        end
-                    elsif (database == "mongodb")
-                        node.vm.provision "shell" do |s|
-                            s.name ="Installing MongoDB"
-                            s.path = scriptDir + "/install-mongodb.sh"
-                            s.privileged=true
-                        end
-                    else
-                        puts "Check your carbonifero.yaml file, you has specified wrong dbms."
-                        exit
-                    end
-                end
             end
 
             # Install all selected languages
@@ -290,32 +268,166 @@ class Carbonifero
                 end
             end
 
+            # Install all selected dbms
+            if settings.include?("dbms")
+                if settings["dbms"].to_s.length == 0
+                    puts "Check your carbonifero.yaml file, you have no dbms specified."
+                    exit
+                end
+                settings["dbms"].each do |database|
+                    if (database == "mariadb")
+                        node.vm.provision "shell" do |s|
+                            s.name ="Installing MariaDB"
+                            s.path = scriptDir + "/install-mariadb.sh"
+                            s.privileged=true
+                        end
+                    elsif (database == "mongodb")
+                        node.vm.provision "shell" do |s|
+                            s.name ="Installing MongoDB"
+                            s.path = scriptDir + "/install-mongodb.sh"
+                            s.privileged=true
+                        end
+                    else
+                        puts "Check your carbonifero.yaml file, you has specified wrong dbms."
+                        exit
+                    end
+                end
+            end
+
             # Configure All Of The Configured Databases
             if settings.has_key?("databases")
                 settings["databases"].each do |db|
-                    node.vm.provision "shell" do |s|
-                        s.name = "Creating MySQL Database: " + db
-                        s.path = scriptDir + "/create-mysql.sh"
-                        s.args = [db]
+                    if settings.has_key?("dbms") and settings["dbms"].include? "mariadb"
+                        node.vm.provision "shell" do |s|
+                            s.name = "Creating MySQL Database: " + db
+                            s.path = scriptDir + "/create-mysql.sh"
+                            s.args = [db]
+                        end
                     end
 
-                    if settings.has_key?("mongodb") && settings["mongodb"]
+                    if settings.has_key?("dbms") and settings["dbms"].include? "mongodb"
                         node.vm.provision "shell" do |s|
                             s.name = "Creating Mongo Database: " + db
                             s.path = scriptDir + "/create-mongo.sh"
                             s.args = [db]
                         end
                     end
-
-                    if settings.has_key?("couchdb") && settings["couchdb"]
-                        node.vm.provision "shell" do |s|
-                            s.name = "Creating Couch Database: " + db
-                            s.path = scriptDir + "/create-couch.sh"
-                            s.args = [db]
-                        end
-                    end
                 end
             end
+
+            # Install selected webserver
+            if settings.has_key?("webserver")
+                web = settings['webserver']
+                if (web == "apache")
+                    node.vm.provision "shell" do |s|
+                        s.name ="Installing Apache"
+                        s.path = scriptDir + "/install-apache.sh"
+                        s.privileged= true
+                    end
+                    
+                    node.vm.provision "shell" do |s|
+                        s.name ="Configure Apache2"
+                        s.path = scriptDir + "/configure-apache.sh"
+                        s.privileged= true
+                        s.args = [hostIp,'000-default','/var/www/html']
+                    end
+                elsif (web == "lighthttpd")
+                    node.vm.provision "shell" do |s|
+                        s.name ="Installing Lighttpd"
+                        s.path = scriptDir + "/install-lighttpd.sh"
+                        s.privileged= true
+                    end
+
+                    node.vm.provision "shell" do |s|
+                        s.name ="Configure Lighthttpd"
+                        s.path = scriptDir + "/configure-lighttpd.sh"
+                        s.privileged= true
+                        s.args = [hostIp,'default','/var/www/html']
+                    end
+                elsif (web == "nginx")
+                    node.vm.provision "shell" do |s|
+                        s.name ="Installing Nginx"
+                        s.path = scriptDir + "/install-nginx.sh"
+                        s.privileged= true
+                    end
+
+                    node.vm.provision "shell" do |s|
+                        s.name ="Configure Nginx"
+                        s.path = scriptDir + "/configure-nginx.sh"
+                        s.privileged= true
+                        s.args = [hostIp,'default','/var/www/html']
+                    end
+                else
+                    puts "Check your carbonifero.yaml file, you has specified wrong webserver."
+                    exit
+                end
+            end
+
+            # Register All Of The Configured Webserver
+            if settings.include? 'sites'
+                if settings.has_key?("webserver")
+                    web = settings['webserver']
+                    settings["sites"].each do |site|
+                        if (web == "apache")
+                            node.vm.provision "shell" do |s|
+                                s.name ="Configuring Site with Apache"
+                                s.path = scriptDir + "/configure-apache.sh"
+                                s.privileged= true
+                                s.args = [hostIp,site['map'],site['to']]
+                            end
+                        elsif (web == "lighthttpd")
+                            node.vm.provision "shell" do |s|
+                                s.name ="Configure Site with Lighthttpd"
+                                s.path = scriptDir + "/configure-lighttpd.sh"
+                                s.privileged= true
+                                s.args = [hostIp,site['map'],site['to']]
+                            end
+                        elsif (web == "nginx")
+                            node.vm.provision "shell" do |s|
+                                s.name ="Configure Site with Nginx"
+                                s.path = scriptDir + "/configure-nginx.sh"
+                                s.privileged= true
+                                s.args = [hostIp,site['map'],site['to']]
+                            end
+                        else
+                            puts "Check your carbonifero.yaml file, you has specified wrong webserver."
+                            exit
+                        end
+                    end
+                else
+                    puts "Check your carbonifero.yaml file, you have not specified webserver."
+                    exit
+                end
+            end
+
+            # Install selected DFS
+            if settings.has_key?("dfs")
+                dfs = settings['dfs']
+                if (dfs == "hadoop")
+                    node.vm.provision "shell" do |s|
+                        s.name ="Installing Java"
+                        s.path = scriptDir + "/install-java.sh"
+                        s.privileged= false
+                    end
+
+                    node.vm.provision "shell" do |s|
+                        s.name ="Installing Hadoop FS"
+                        s.path = scriptDir + "/install-hadoop.sh"
+                        s.privileged= false
+                    end
+
+                    node.vm.provision "shell" do |s|
+                        s.name ="Configuring Hadoop FS"
+                        s.path = scriptDir + "/configure-hadoop.sh"
+                        s.args = [settings['nodes']||=1, i]
+                        s.privileged= true
+                    end
+                else
+                    puts "Check your carbonifero.yaml file, you has specified wrong DFS."
+                    exit
+                end
+            end
+
             # Message
             node.vm.provision "shell" do |s|
                 s.name = "Message from Developer"

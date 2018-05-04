@@ -10,6 +10,7 @@ fi
 
 touch /home/vagrant/.extras
 
+sudo apt-get -y update
 sudo apt-get -y install software-properties-common
 sudo apt-get -y install apt-transport-https
 sudo apt-get -y install curl

@@ -2,3 +2,4 @@
 .vagrant/
 *.box
 Carbonifero.yaml
+*.log
