@@ -1,0 +1,2 @@
+JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+SPARK_WORKER_MEMORY=1G

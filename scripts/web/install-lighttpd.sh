@@ -10,6 +10,8 @@ fi
 
 touch /home/vagrant/.lighttpd
 
+sudo dpkg --configure -a
+cd ~
 sudo apt-get -y remove --purge nginx-extras apache2
 sudo apt-get -y update
 sudo apt-get -y install lighttpd

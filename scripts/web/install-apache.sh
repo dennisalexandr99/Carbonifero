@@ -10,6 +10,8 @@ fi
 
 touch /home/vagrant/.apache
 
+sudo dpkg --configure -a
+cd ~
 sudo apt-get -y remove --purge nginx-extras lighttpd
 sudo apt-get -y update
 sudo apt-get -y install apache2

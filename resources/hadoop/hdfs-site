@@ -12,11 +12,11 @@
 
     <property>
         <name>dfs.namenode.name.dir</name>
-        <value>/usr/local/bin/hadoop-2.7.3/hadoop2_data/hdfs/namenode</value>
+        <value>/usr/local/bin/hadoop/hadoop2_data/hdfs/namenode</value>
     </property>
 
     <property>
         <name>dfs.datanode.data.dir</name>
-        <value>/usr/local/bin/hadoop-2.7.3/hadoop2_data/hdfs/datanode</value>
+        <value>/usr/local/bin/hadoop/hadoop2_data/hdfs/datanode</value>
     </property>
 </configuration>

@@ -10,6 +10,9 @@ fi
 
 touch /home/vagrant/.nginx
 
+sudo dpkg --configure -a
+cd ~
+
 sudo apt-get -y remove --purge apache2 lighttpd
 sudo apt-get -y update
 sudo apt-get -y install nginx

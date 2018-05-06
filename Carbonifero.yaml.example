@@ -4,35 +4,63 @@ memory: 1024
 cpus: 1
 provider: virtualbox
 
-nodes: 3
+# Nodes : Computer Deployed
+nodes: 5
 
+# Replication Rate : 1(100%),2(50%),3(33%),4(25%),5(20%)
+replication: 3
+
+# Public Key for SSH
 authorize: ~/.ssh/id_rsa.pub
 
+# Private Key for SSH
 keys:
     - ~/.ssh/id_rsa
 
+# Shared Folder
 folders:
     - map: D:/projects
       to: /home/vagrant/projects
 
+# Programming Language
 languages:
-    - php5.6
-#     - php7.0
-#     - php7.1
-#     - php7.2
-#     - java
-#     - nodejs
+    # - php5.6
+    # - php7.0
+    # - php7.1
+    # - php7.2
+    - java
+    # - nodejs
+    # - ruby
+    # - scala
 
+# Database Management Systen
 dbms:
-    - mariadb
-#     - mongodb
+    - hbase
+    # - mariadb
+    # - mongodb
 
+# Database Name
 databases:
     - carbonifero
-    
-# ports:
-#     - send: 50000
-#       to: 5000
-#     - send: 7777
-#       to: 777
-#       protocol: udp
+
+# Webserver
+webserver: lighttpd
+
+# Sites that sit on Webserver
+sites:
+    - map: carbonifero.test
+      to: /var/www/html
+
+# Distributed File System
+dfs: hadoop
+
+# Distributed Processing
+cluster: spark
+
+# Port Forwarding
+ports:
+    - send: 50000
+      to: 5000
+    - send: 7777
+      to: 777
+      protocol: udp

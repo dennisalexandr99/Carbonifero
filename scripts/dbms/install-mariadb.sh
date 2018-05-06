@@ -11,11 +11,8 @@ fi
 
 touch /home/vagrant/.maria
 
-# Disable Apparmor
-
-sudo service apparmor stop
-sudo service apparmor teardown
-sudo update-rc.d -f apparmor remove
+sudo dpkg --configure -a
+cd ~
 
 # Remove MySQL
 

@@ -10,10 +10,13 @@ fi
 
 touch /home/vagrant/.chost
 
+# Split IP
 IFS='.' read -r -a array <<< $1
 numNodes=$2
 sudo su
-echo "# Cofigure by Vagrant < Carbonifero >" >> /etc/hosts
+
+# Writing to Hosts File
+echo "# Cofigure by Vagrant Host for Carbonifero" >> /etc/hosts
 for ((i=1;i<=numNodes;i++));
 do
     if [ "$i" = "1" ]; then

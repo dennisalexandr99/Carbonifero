@@ -18,21 +18,39 @@ Vagrant Setup for Server Administration
 - 5432 => 54320
 - 8025 => 8025
 - 27017 => 27017
+
 ### Installed Apps 
 - Language Pack En Base
 - APT Transport Https
 - Software Properties Common
+- Curl
+- Python Software Properties 
+- Debconf Utils
 
 ### Available Apps
 ### DBMS
 - Mongo
 - MariaDB
+- HBase
 
 ### Programming Language
 - PHP (5.6, 7.0, 7.1, 7.2)
 - Java 8.0
 - NodeJS
 - Ruby
+- Scala
+
+### Web Server
+- Apache Web Server
+- Lighttpd (PHP-CGI)
+- Nginx (PHP-FPM)
+
+### Distributed File System
+- Apache Hadoop
+
+### Cluster Computing
+- Apache Spark
+- Zookeeper
 
 ## Installation
 First you must clone this repository
@@ -82,6 +100,9 @@ Fire Up Vagrant
 `$ vagrant up`
 
 Voila.
+
+(Optional) Install Vagrant-Cachier, this will help you save the bandwith if you deploy multiple nodes
+`$ vagrant plugin install vagrant-cachier`
 
 ## Security
 If you discover any security related issues, please email ahmad.riyadh.al@faathin.com instead of using the issue tracker.

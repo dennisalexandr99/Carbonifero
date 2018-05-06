@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Creating Database
 cat > /root/.my.cnf << EOF
 [client]
 user = carbonifero
