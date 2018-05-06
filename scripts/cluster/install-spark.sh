@@ -33,7 +33,7 @@ sudo rm spark-2.3.0-bin-hadoop2.7.tgz
 SPARK_HOME=/usr/local/bin/spark
 block="## Generate By Carbofinero for Spark
 export SPARK_HOME='$SPARK_HOME'
-export PATH=$PATH:$SPARK_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin"
+export PATH=$PATH:$SPARK_HOME/bin:/usr/local/hadoop/bin:/usr/local/hadoop/sbin"
 
 cd ~
 sudo echo "$block" >> ~/.bashrc

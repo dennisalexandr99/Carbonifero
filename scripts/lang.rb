@@ -69,7 +69,7 @@ class Lang
         @node.vm.provision "shell" do |s|
             s.name ="Installing Scala"
             s.path = @@scriptDir + "/install-scala.sh"
-            s.privileged=true
+            s.privileged=false
         end
     end
 end

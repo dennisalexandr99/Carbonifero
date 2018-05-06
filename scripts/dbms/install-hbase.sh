@@ -32,7 +32,7 @@ sudo rm hbase-1.2.6-bin.tar.gz
 HBASE_HOME=/usr/local/bin/hbase
 block="## Generate By Carbofinero for HBase
 export HBASE_HOME='$HBASE_HOME'
-export PATH=$PATH:$HBASE_HOME/bin:$ZOOKEEPER_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin"
+export PATH=$PATH:$HBASE_HOME/bin:/usr/local/zookeeper/bin:$HADOOP_HOME/bin:/usr/local/zookeeper/sbin:/usr/local/spark/bin"
 
 cd ~
 sudo echo "$block" >> ~/.bashrc

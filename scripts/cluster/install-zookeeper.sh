@@ -33,7 +33,7 @@ sudo rm zookeeper-3.4.12.tar.gz
 ZOOKEEPER_HOME=/usr/local/bin/zookeeper
 block="## Generate By Carbofinero for Zookeeper
 export ZOOKEEPER_HOME='$ZOOKEEPER_HOME'
-export PATH=$PATH:$ZOOKEEPER_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin"
+export PATH=$PATH:$ZOOKEEPER_HOME/bin:/usr/local/hadoop/bin:/usr/local/hadoop/sbin:/usr/local/spark/bin"
 
 cd ~
 sudo echo "$block" >> ~/.bashrc
