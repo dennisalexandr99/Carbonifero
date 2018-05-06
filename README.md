@@ -102,6 +102,7 @@ Fire Up Vagrant
 Voila.
 
 (Optional) Install Vagrant-Cachier, this will help you save the bandwith if you deploy multiple nodes
+
 `$ vagrant plugin install vagrant-cachier`
 
 ## Security
