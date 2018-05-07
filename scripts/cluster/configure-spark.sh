@@ -11,6 +11,14 @@ fi
 touch /home/vagrant/.cspark
 echo "Reconfigured Spark, This will format all Configuration"
 
-# Edit Spark Environment
+# Move Directory
 cd /usr/local/bin/spark
+
+# Create Directory
+sudo mkdir -p data
+sudo mkdir -p logs
+sudo chown vagrant -R data logs
+sudo chmod 777 -R data logs
+
+# Edit Spark Environment
 sudo cat /vagrant/resources/spark/env >> spark-env.sh;
