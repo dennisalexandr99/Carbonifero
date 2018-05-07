@@ -84,11 +84,6 @@ class Configuration
         default_ports = {
             80 => 8000+@i,
             443 => 44300+@i,
-            3306 => 33060+@i,
-            4040 => 4040+@i,
-            5432 => 54320+@i,
-            8025 => 8025+@i,
-            27017 => 27017+@i
         }
 
         # Use Default Port Forwarding Unless Overridden
@@ -197,10 +192,8 @@ class Configuration
             # More info on http://fgrehm.viewdocs.io/vagrant-cachier/usage
             @config.cache.scope = :box
             @config.cache.synced_folder_opts = {
-            type: :nfs,
-            mount_options: ['rw', 'vers=3', 'tcp', 'nolock'],
-            owner: "vagrant",
-            group: "vagrant"
+                owner: "vagrant",
+                group: "vagrant"
             }
             # For more information please check http://docs.vagrantup.com/v2/synced-folders/basic_usage.html
         end

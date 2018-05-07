@@ -48,15 +48,12 @@ sudo cp /vagrant/resources/hadoop/yarn-site yarn-site.xml -f
 
 # Create Master and Slave
 # Master
-for ((i=1;i<=numReplica;i++));
-do
-    sudo echo "carbonifero-$i" >| masters;
-done
+sudo echo "master" >> masters;
 
 # Slave
 for ((i=1;i<numNodes;i++));
 do
-    sudo echo "carbonifero-$i" >| slaves;
+    sudo echo "carbonifero-$i" >> slaves;
 done
 
 # Format Namenode
