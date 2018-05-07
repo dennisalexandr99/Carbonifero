@@ -63,9 +63,15 @@ Then move your default folder to Carbonifero directory
 
 Next Copy Carbonifero.yaml.example to Carbonifero.yaml
 
+- Linux / Unix
+
 `$ cp Carbonifero.yaml.example Carbonifero.yaml`
 
-After that, configure your Carbonifero configuration. Setting that can be customized are cpu core, ram, memory, os, ip and apps
+- Windows
+
+`$ copy Carbonifero.yaml.example Carbonifero.yaml`
+
+After that, configure your Carbonifero configuration. Setting that can be customized are nodes, replication level, cpu core, ram, memory, os, ip and apps
 
 Example :   
 	
@@ -75,6 +81,10 @@ Example :
     
 	cpus: 1
     
+	nodes: 5
+
+	replication: 3
+
 	provider: virtualbox
     
 	authorize: ~/.ssh/id_rsa.pub
@@ -87,13 +97,17 @@ Example :
           to: /home/vagrant/projects
 		  
     dbms:
-		- mongodb
+		- dbase
     
 	languages:
 		- java
 		
 	databases:
 		- carbonifero
+
+	cluster: spark
+
+	dfs: hadoop
     
 Fire Up Vagrant
 
@@ -101,7 +115,7 @@ Fire Up Vagrant
 
 Voila.
 
-(Optional) Install Vagrant-Cachier, this will help you save the bandwith if you deploy multiple nodes
+(Optional) Install Vagrant-Cachier, this will help you save the bandwidth if you deploy multiple nodes
 
 `$ vagrant plugin install vagrant-cachier`
 
