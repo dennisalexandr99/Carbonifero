@@ -36,4 +36,12 @@ class Dbms
             s.privileged=false
         end
     end
+
+    def cassandra()
+        @node.vm.provision "shell" do |s|
+            s.name ="Installing Cassandra"
+            s.path = @@scriptDir + "/install-cassandra.sh"
+            s.privileged=false
+        end
+    end
 end

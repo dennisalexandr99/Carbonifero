@@ -174,6 +174,17 @@ class Carbonifero
                         configuration.zookeeper()
                         dbms.hbase()
                         configuration.hbase()
+                    elsif (database == "cassandra")
+                        lang.java()
+                        dfs.hadoop()
+                        configuration.hadoop()
+                        lang.scala()
+                        cluster.spark()
+                        configuration.spark()
+                        cluster.zookeeper()
+                        configuration.zookeeper()
+                        dbms.cassandra()
+                        configuration.cassandra()
                     else
                         puts "Check your carbonifero.yaml file, you has specified wrong dbms."
                         exit

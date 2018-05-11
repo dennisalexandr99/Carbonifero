@@ -225,6 +225,15 @@ class Configuration
         end
     end
 
+    def cassandra()
+        @node.vm.provision "shell" do |s|
+            s.name = "Configuring Cassandra"
+            s.path = @@scriptDir + "/dbms/configure-cassandra.sh"
+            s.privileged=true
+            s.args = [@settings['ip'] ||= "192.168.10.10", @settings['nodes']]
+        end
+    end
+
     def apache(ip,name,folder)
         @node.vm.provision "shell" do |s|
             s.name ="Configuring Apache2"
@@ -277,5 +286,4 @@ class Configuration
             s.args = [@settings['nodes']||=1,@settings['replication']||=2, @i]
         end
     end
-    
 end
