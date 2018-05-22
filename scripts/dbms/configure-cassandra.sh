@@ -12,7 +12,7 @@ touch /home/vagrant/.ccassandra
 echo "Reconfigured Cassandra, This will format all Configuration"
 
 # cd /usr/local/bin/cassandra
-cd /etc/bin/cassandra
+cd /usr/local/bin/cassandra
 
 # Create Directory
 sudo mkdir -p data

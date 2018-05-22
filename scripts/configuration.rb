@@ -274,6 +274,7 @@ class Configuration
         @node.vm.provision "shell" do |s|
             s.name ="Configuring Spark Cluster"
             s.path = @@scriptDir + "/cluster/configure-spark.sh"
+            s.args = [@settings['ip'] ||= "192.168.10.10",@settings['nodes']||=1,@settings['replication']||=2, @i]
             s.privileged= true
         end
     end

@@ -51,6 +51,7 @@ class Carbonifero
 
             common.extras()
             common.host()
+            common.ssh()
            
 
             # Install all selected languages

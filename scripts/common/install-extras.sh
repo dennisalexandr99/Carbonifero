@@ -20,6 +20,9 @@ sudo apt-get -y install software-properties-common
 sudo apt-get -y install apt-transport-https
 sudo apt-get -y install curl
 sudo apt-get -y install python-software-properties debconf-utils
+sudo apt-get -y install python-pip
+sudo apt-get -y install mosquitto
+pip install paho-mqtt
 
 #Fix Bug
 sudo apt-get -y install language-pack-en-base

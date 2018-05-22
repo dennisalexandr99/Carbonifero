@@ -27,4 +27,14 @@ class Common
             s.args = [@settings['ip'] ||= "192.168.10.10", @settings['nodes']]
         end
     end
+
+    def ssh()
+        #Install Host
+        @node.vm.provision "shell" do |s|
+            s.name = "Connect SSH"
+            s.path = @@scriptDir + "/configure-ssh.sh"
+            s.privileged=false
+            s.args = [@i, @settings['nodes']]
+        end
+    end
 end
