@@ -84,6 +84,9 @@ class Configuration
         default_ports = {
             80 => 8000+@i,
             443 => 44300+@i,
+            27017 => 27170+@i,
+            27018 => 27180+@i,
+            27019 => 27190+@i
         }
 
         # Use Default Port Forwarding Unless Overridden
