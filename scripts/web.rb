@@ -1,6 +1,6 @@
 class Web
     # Configure Local Variable To Access Scripts From Remote Location
-    @@scriptDir = File.dirname(__FILE__) + '/lang'
+    @@scriptDir = File.dirname(__FILE__) + '/web'
 
     def initialize(config, settings, node, i)
         @config = config
