@@ -204,18 +204,22 @@ class Configuration
     end
 
     def mysql(db)
-        @node.vm.provision "shell" do |s|
-            s.name = "Configuring MySQL Database: " + db
-            s.path = @@scriptDir + "/dbms/configure-mysql.sh"
-            s.args = [db]
+        if @i==1
+            @node.vm.provision "shell" do |s|
+                s.name = "Configuring MySQL Database: " + db
+                s.path = @@scriptDir + "/dbms/configure-mysql.sh"
+                s.args = [db]
+            end
         end
     end
 
     def mongodb(db)
-        @node.vm.provision "shell" do |s|
-            s.name = "Configuring Mongo Database: " + db
-            s.path = @@scriptDir + "/dbms/configure-mongo.sh"
-            s.args = [db]
+        if @i<=((@settings['nodes']||=1)+1/(@settings['replication']||=2))
+            @node.vm.provision "shell" do |s|
+                s.name = "Configuring Mongo Database: " + db
+                s.path = @@scriptDir + "/dbms/configure-mongo.sh"
+                s.args = [db]
+            end
         end
     end
 
@@ -238,29 +242,35 @@ class Configuration
     end
 
     def apache(ip,name,folder)
-        @node.vm.provision "shell" do |s|
-            s.name ="Configuring Apache2"
-            s.path = @@scriptDir + "/web/configure-apache.sh"
-            s.privileged= true
-            s.args = [ip,name,folder]
+        if @i<=((@settings['nodes']||=1)+1/(@settings['replication']||=2))
+            @node.vm.provision "shell" do |s|
+                s.name ="Configuring Apache2"
+                s.path = @@scriptDir + "/web/configure-apache.sh"
+                s.privileged= true
+                s.args = [ip,name,folder]
+            end
         end
     end
 
     def lighttpd(ip,name,folder)
-        @node.vm.provision "shell" do |s|
-            s.name ="Configuring Lighttpd"
-            s.path = @@scriptDir + "/web/configure-lighttpd.sh"
-            s.privileged= true
-            s.args = [ip,name,folder]
+        if @i<=((@settings['nodes']||=1)+1/(@settings['replication']||=2))
+            @node.vm.provision "shell" do |s|
+                s.name ="Configuring Lighttpd"
+                s.path = @@scriptDir + "/web/configure-lighttpd.sh"
+                s.privileged= true
+                s.args = [ip,name,folder]
+            end
         end
     end
 
     def nginx(ip,name,folder)
-        @node.vm.provision "shell" do |s|
-            s.name ="Configuring Nginx"
-            s.path = @@scriptDir + "/web/configure-nginx.sh"
-            s.privileged= true
-            s.args = [ip,name,folder]
+        if @i<=((@settings['nodes']||=1)+1/(@settings['replication']||=2))
+            @node.vm.provision "shell" do |s|
+                s.name ="Configuring Nginx"
+                s.path = @@scriptDir + "/web/configure-nginx.sh"
+                s.privileged= true
+                s.args = [ip,name,folder]
+            end
         end
     end
 

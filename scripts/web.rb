@@ -10,26 +10,32 @@ class Web
     end
 
     def apache()
-        @node.vm.provision "shell" do |s|
-            s.name ="Installing Apache"
-            s.path = @@scriptDir + "/install-apache.sh"
-            s.privileged= true
+        if @i<=((@settings['nodes']||=1)+1/(@settings['replication']||=2))
+            @node.vm.provision "shell" do |s|
+                s.name ="Installing Apache"
+                s.path = @@scriptDir + "/install-apache.sh"
+                s.privileged= true
+            end
         end
     end
 
     def lighttpd()
-        @node.vm.provision "shell" do |s|
-            s.name ="Installing Lighttpd"
-            s.path = @@scriptDir + "/install-lighttpd.sh"
-            s.privileged= true
+        if @i<=((@settings['nodes']||=1)+1/(@settings['replication']||=2))
+            @node.vm.provision "shell" do |s|
+                s.name ="Installing Lighttpd"
+                s.path = @@scriptDir + "/install-lighttpd.sh"
+                s.privileged= true
+            end
         end
     end
 
     def nginx()
-        @node.vm.provision "shell" do |s|
-            s.name ="Installing Nginx"
-            s.path = @@scriptDir + "/install-nginx.sh"
-            s.privileged= true
+        if @i<=((@settings['nodes']||=1)+1/(@settings['replication']||=2))
+            @node.vm.provision "shell" do |s|
+                s.name ="Installing Nginx"
+                s.path = @@scriptDir + "/install-nginx.sh"
+                s.privileged= true
+            end
         end
     end
 end

@@ -22,6 +22,7 @@ sudo apt-get -y install curl
 sudo apt-get -y install python-software-properties debconf-utils
 sudo apt-get -y install python-pip
 sudo apt-get -y install mosquitto
+sudo apt-get -y install composer
 pip install paho-mqtt
 
 #Fix Bug
