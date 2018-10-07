@@ -17,7 +17,7 @@ if [ -e "spark-2.3.0-bin-hadoop2.7.tgz" ]; then
     echo "Installing Spark from Local File"
 else
     echo "Installing Spark from Server"
-    sudo wget http://www-us.apache.org/dist/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz 2>/dev/null
+    sudo wget https://archive.apache.org/dist/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz 2>/dev/null
 fi
 
 # Copy File from /vagrant/downloads

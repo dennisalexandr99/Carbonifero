@@ -17,7 +17,7 @@ if [ -e "jdk-8u162-linux-x64.tar.gz" ]; then
     echo "Installing Java 8 from Local File"
 else
     echo "Installing Java 8 from Server"
-    sudo wget "http://ftp.osuosl.org/pub/funtoo/distfiles/oracle-java/jdk-8u162-linux-x64.tar.gz" 2>/dev/null
+    sudo wget "https://mail-tp.fareoffice.com/java/jdk-8u162-linux-x64.tar.gz" 2>/dev/null
 fi
 
 # Copy file from /vagrant/resources
